@@ -33,12 +33,12 @@
     <label class="required" for="expert">Expert IZI en charge</label>
     <select id="expert">
       <option value="">Sélectionner un expert</option>
-      <option value="Cécile BARRETO" data-phone="+33757594903" data-email="cecile.barreto@izi-by-edf.fr">Cécile BARRETO</option>
-      <option value="Etienne CLAIRET" data-phone="+33644608967" data-email="etienne.clairet@izi-by-edf.fr">Etienne CLAIRET</option>
-      <option value="Mélanie LESECQ" data-phone="+33757590638" data-email="melanie.lesecq@izi-by-edf.fr">Mélanie LESECQ</option>
-      <option value="Céleste HERNOUT" data-phone="+33644648524" data-email="celeste.hernout@izi-by-edf.fr">Céleste HERNOUT</option>
-      <option value="Mélissa PENNEQUIN" data-phone="+33757595097" data-email="melissa.pennequin@izi-by-edf.fr">Mélissa PENNEQUIN</option>
-      <option value="Jonathan DEBUIGNY" data-phone="+33757596172" data-email="jonathan.debuigny@izi-by-edf.fr">Jonathan DEBUIGNY</option>
+      <option value="Cécile BARRETO" data-subject="BARRETO Cécile" data-phone="+33757594903" data-email="cecile.barreto@izi-by-edf.fr">Cécile BARRETO</option>
+      <option value="Etienne CLAIRET" data-subject="CLAIRET Etienne" data-phone="+33644608967" data-email="etienne.clairet@izi-by-edf.fr">Etienne CLAIRET</option>
+      <option value="Mélanie LESECQ" data-subject="LESECQ Mélanie" data-phone="+33757590638" data-email="melanie.lesecq@izi-by-edf.fr">Mélanie LESECQ</option>
+      <option value="Céleste HERNOUT" data-subject="HERNOUT Céleste" data-phone="+33644648524" data-email="celeste.hernout@izi-by-edf.fr">Céleste HERNOUT</option>
+      <option value="Mélissa PENNEQUIN" data-subject="PENNEQUIN Mélissa" data-phone="+33757595097" data-email="melissa.pennequin@izi-by-edf.fr">Mélissa PENNEQUIN</option>
+      <option value="Jonathan DEBUIGNY" data-subject="DEBUIGNY Jonathan" data-phone="+33757596172" data-email="jonathan.debuigny@izi-by-edf.fr">Jonathan DEBUIGNY</option>
     </select>
     <div class="error">Champ obligatoire.</div>
   </div>
@@ -80,7 +80,14 @@ const $=id=>document.getElementById(id);const text=id=>($(id).value||'').trim();
 function formatDate(v){if(!v)return'Non renseignée';const[y,m,d]=v.split('-');return d+'/'+m+'/'+y}
 function power(){const p=checked('puissance');return p==='Autre'?(text('puissanceAutre')||'Autre'):p}
 function selectedActions(){const items=[...document.querySelectorAll('#actionsChoices input:checked')].map(x=>x.value);const free=text('actions');if(free)items.push(free);return items.length?items.join(' ; '):'Aucune action renseignée'}
-function buildSubject(){return 'SAV IZI / '+(text('expert')||'Expert IZI')+' / '+(text('client')||'Nom Client')+' / EVH5 / '+(text('sn')||'SN')+' / '+(text('erreurCourte')||'Description de l’erreur')}
+function buildSubject(){
+    const opt=$('expert').selectedOptions[0];
+    const expertSujet=opt?.dataset?.subject || text('expert') || 'Expert IZI';
+    const requete=text('client') || 'Nom de la requête';
+    const sn=text('sn') || 'SN';
+    const erreur=text('erreurCourte') || 'description courte de l’erreur';
+    return 'SAV IZI / '+expertSujet+' /'+requete+'/ EVH5 /'+sn+'/"'+erreur+'"';
+  }
 function buildTicket(){return 'À l’attention du CCC Schneider Electric,\n\nMadame, Monsieur,\n\nNous sollicitons votre intervention à la suite d\'un potentiel dysfonctionnement constaté sur une borne Schneider Electric. Vous trouverez ci-dessous les informations nécessaires.\n\nRequête :\nNom de la requête : '+(text('client')||'Non renseigné')+'\n\n1) Expert IZI en charge\nNom : '+(text('expert')||'Non renseigné')+'\nTéléphone : '+(text('telephone')||'Non renseigné')+'\nE-mail : '+(text('email')||'schneider@izi-by-edf.fr')+'\n\n2) Identification de la borne\nModèle : '+(checked('modele')||'Non renseigné')+'\nNuméro de série (SN) : '+(text('sn')||'Non renseigné')+'\nDate d’installation : '+formatDate($('dateInstallation').value)+'\n\n3) Abonnement & puissance\nType de raccordement : '+(checked('raccordement')||'Non renseigné')+'\nPuissance souscrite (abonnement) : '+(power()||'Non renseignée')+'\nModulation de puissance : '+(checked('modulation')||'Non renseignée')+'\n\n4) Description du problème\nDate d’apparition : '+formatDate($('dateApparition').value)+'\nSymptômes constatés : '+(text('symptomes')||'Non renseignés')+'\nActions déjà entreprises : '+selectedActions()+'\n\nNous vous remercions par avance pour votre retour et votre accompagnement.\n\nRestant disponibles pour tout complément d’information et pour coordonner l’intervention sur site.\n\nCordialement,'}
 function validate(){let ok=true;document.querySelectorAll('[data-required-text]').forEach(w=>{const c=w.querySelector('input,select,textarea');const invalid=!c.value.trim();w.classList.toggle('invalid',invalid);if(invalid)ok=false});document.querySelectorAll('[data-required-choice]').forEach(w=>{const n=w.getAttribute('data-required-choice');const invalid=!checked(n);w.classList.toggle('invalid',invalid);if(invalid)ok=false});if(checked('puissance')==='Autre'&&!text('puissanceAutre')){$('puissanceAutreWrap').classList.add('invalid');ok=false}else $('puissanceAutreWrap').classList.remove('invalid');return ok}
 function render(){$('subjectOutput').textContent=buildSubject();$('ticketOutput').textContent=buildTicket();$('resultCard').classList.add('visible');$('resultCard').scrollIntoView({behavior:'smooth',block:'start'})}
