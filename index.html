@@ -45,9 +45,9 @@
       <div><label for="telephone">Téléphone expert</label><input id="telephone" type="tel" placeholder="Rempli automatiquement"></div>
       <div><label for="email">E-mail</label><input id="email" type="email" value="schneider@izi-by-edf.fr" readonly></div>
     </div>
-    <h2 class="section-title" style="margin-top:26px;"><span class="badge">2</span> Identification de la borne</h2>
+    <h2 class="section-title" style="margin-top:26px;"><span class="badge">2</span> Identification du matériel</h2>
     <div class="grid">
-      <div class="field" data-required-choice="modele"><label class="required">Modèle</label><div class="choice-group"><label class="choice"><input type="radio" name="modele" value="Charge"><span>Charge</span></label><label class="choice"><input type="radio" name="modele" value="Charge Pro"><span>Charge Pro</span></label></div><div class="error">Choix obligatoire.</div></div>
+      <div class="field full" data-required-choice="modele"><label class="required">Référence matériel</label><div class="choice-group"><label class="choice"><input type="radio" name="modele" value="EVA2HPC1 - Peak mono"><span>EVA2HPC1 — Peak mono</span></label><label class="choice"><input type="radio" name="modele" value="EVA2HPC3 - Peak tri"><span>EVA2HPC3 — Peak tri</span></label><label class="choice"><input type="radio" name="modele" value="EVH5A22N400F - Borne Charge"><span>EVH5A22N400F — Borne Charge</span></label><label class="choice"><input type="radio" name="modele" value="EVB4S22N40MG - Borne Charge Pro"><span>EVB4S22N40MG — Borne Charge Pro</span></label></div><div class="error">Choix obligatoire.</div></div>
       <div class="field" data-required-text><label class="required" for="sn">Numéro de série (SN)</label><input id="sn" type="text" placeholder="Ex. SN2601220445"><div class="error">Numéro de série obligatoire.</div></div>
       <div><label for="dateInstallation">Date d’installation</label><input id="dateInstallation" type="date"></div>
       <div class="field" data-required-text><label class="required" for="erreurCourte">Description courte de l’erreur</label><input id="erreurCourte" type="text" maxlength="80" placeholder="Ex. Connector Lock / borne rouge / charge impossible"><div class="hint">Utilisée dans l’objet du ticket.</div><div class="error">Description courte obligatoire.</div></div>
