@@ -33,17 +33,17 @@
     <label class="required" for="expert">Expert IZI en charge</label>
     <select id="expert">
       <option value="">Sélectionner un expert</option>
-      <option value="Cécile BARRETO" data-subject="BARRETO Cécile" data-phone="+33757594903" data-email="cecile.barreto@izi-by-edf.fr">Cécile BARRETO</option>
-      <option value="Etienne CLAIRET" data-subject="CLAIRET Etienne" data-phone="+33644608967" data-email="etienne.clairet@izi-by-edf.fr">Etienne CLAIRET</option>
-      <option value="Mélanie LESECQ" data-subject="LESECQ Mélanie" data-phone="+33757590638" data-email="melanie.lesecq@izi-by-edf.fr">Mélanie LESECQ</option>
-      <option value="Céleste HERNOUT" data-subject="HERNOUT Céleste" data-phone="+33644648524" data-email="celeste.hernout@izi-by-edf.fr">Céleste HERNOUT</option>
-      <option value="Mélissa PENNEQUIN" data-subject="PENNEQUIN Mélissa" data-phone="+33757595097" data-email="melissa.pennequin@izi-by-edf.fr">Mélissa PENNEQUIN</option>
-      <option value="Jonathan DEBUIGNY" data-subject="DEBUIGNY Jonathan" data-phone="+33757596172" data-email="jonathan.debuigny@izi-by-edf.fr">Jonathan DEBUIGNY</option>
+      <option value="Cécile BARRETO" data-subject="BARRETO Cécile" data-phone="+33757594903">Cécile BARRETO</option>
+      <option value="Etienne CLAIRET" data-subject="CLAIRET Etienne" data-phone="+33644608967">Etienne CLAIRET</option>
+      <option value="Mélanie LESECQ" data-subject="LESECQ Mélanie" data-phone="+33757590638">Mélanie LESECQ</option>
+      <option value="Céleste HERNOUT" data-subject="HERNOUT Céleste" data-phone="+33644648524">Céleste HERNOUT</option>
+      <option value="Mélissa PENNEQUIN" data-subject="PENNEQUIN Mélissa" data-phone="+33757595097">Mélissa PENNEQUIN</option>
+      <option value="Jonathan DEBUIGNY" data-subject="DEBUIGNY Jonathan" data-phone="+33757596172">Jonathan DEBUIGNY</option>
     </select>
     <div class="error">Champ obligatoire.</div>
   </div>
       <div><label for="telephone">Téléphone expert</label><input id="telephone" type="tel" placeholder="Rempli automatiquement"></div>
-      <div><label for="email">E-mail</label><input id="email" type="email" placeholder="Rempli automatiquement"></div>
+      <div><label for="email">E-mail</label><input id="email" type="email" value="schneider@izi-by-edf.fr" readonly></div>
     </div>
     <h2 class="section-title" style="margin-top:26px;"><span class="badge">2</span> Identification de la borne</h2>
     <div class="grid">
@@ -97,11 +97,11 @@ async function copy(v){try{await navigator.clipboard.writeText(v)}catch{const ta
 $('expert').addEventListener('change',()=>{
   const opt=$('expert').selectedOptions[0];
   $('telephone').value=opt?.dataset?.phone||'';
-  $('email').value=opt?.dataset?.email||'';
+  $('email').value='schneider@izi-by-edf.fr';
   const w=$('expert').closest('.field');
   if(w && $('expert').value) w.classList.remove('invalid');
 });
-$('generateBtn').onclick=()=>{if(validate())render();else toast('Complète les champs obligatoires.')};$('copyAllBtn').onclick=()=>copy('Objet : '+buildSubject()+'\n\n'+buildTicket());$('copySubjectBtn').onclick=()=>copy(buildSubject());$('printBtn').onclick=()=>window.print();$('resetBtn').onclick=()=>{if(!confirm('Réinitialiser tous les champs ?'))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll('input[type="text"],input[type="tel"],input[type="date"],textarea').forEach(x=>x.value='');$('expert').value='';$('telephone').value='';$('email').value='';$('puissanceAutreWrap').style.display='none';$('resultCard').classList.remove('visible');document.querySelectorAll('.invalid').forEach(x=>x.classList.remove('invalid'));window.scrollTo({top:0,behavior:'smooth'})};document.querySelectorAll('input[name="puissance"]').forEach(x=>x.addEventListener('change',()=>{$('puissanceAutreWrap').style.display=checked('puissance')==='Autre'?'block':'none'}));document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('change',()=>{const w=el.closest('.field');if(w)w.classList.remove('invalid')}));
+$('generateBtn').onclick=()=>{if(validate())render();else toast('Complète les champs obligatoires.')};$('copyAllBtn').onclick=()=>copy('Objet : '+buildSubject()+'\n\n'+buildTicket());$('copySubjectBtn').onclick=()=>copy(buildSubject());$('printBtn').onclick=()=>window.print();$('resetBtn').onclick=()=>{if(!confirm('Réinitialiser tous les champs ?'))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll('input[type="text"],input[type="tel"],input[type="date"],textarea').forEach(x=>x.value='');$('expert').value='';$('telephone').value='';$('email').value='schneider@izi-by-edf.fr';$('puissanceAutreWrap').style.display='none';$('resultCard').classList.remove('visible');document.querySelectorAll('.invalid').forEach(x=>x.classList.remove('invalid'));window.scrollTo({top:0,behavior:'smooth'})};document.querySelectorAll('input[name="puissance"]').forEach(x=>x.addEventListener('change',()=>{$('puissanceAutreWrap').style.display=checked('puissance')==='Autre'?'block':'none'}));document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('change',()=>{const w=el.closest('.field');if(w)w.classList.remove('invalid')}));
 </script>
 </body>
 </html>
